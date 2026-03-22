@@ -910,6 +910,13 @@ function ConferenceView({ groups, teamsToShow, showPlayoffLine, rotationInterval
 // ─── Main Display Component ─────────────────────────────────────────────────
 
 export default function StandingsPlugin({ config, style }: PluginComponentProps) {
+  const sdk = window.__HS_SDK__;
+
+  // Guard against SDK not being initialized
+  if (!sdk) {
+    return <div style={{ padding: 16, opacity: 0.5 }}>SDK not ready</div>;
+  }
+
   const view = (config.view as StandingsView) ?? 'table';
   const league = (config.league as string) ?? 'nba';
   const grouping = (config.grouping as StandingsGrouping) ?? 'conference';
@@ -921,13 +928,11 @@ export default function StandingsPlugin({ config, style }: PluginComponentProps)
 
   const [groups, error] = useStandingsData(league, grouping, refreshIntervalMs);
 
-  const { ModuleLoadingState } = window.__HS_SDK__;
-
   if (groups === null) {
     return (
-      <ModuleLoadingState loading error={error ?? undefined}>
+      <sdk.ModuleLoadingState loading error={error ?? undefined}>
         <div />
-      </ModuleLoadingState>
+      </sdk.ModuleLoadingState>
     );
   }
 
