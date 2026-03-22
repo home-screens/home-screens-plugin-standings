@@ -1,0 +1,148 @@
+{
+  "id": "standings",
+  "name": "Sports Standings",
+  "version": "1.2.0",
+  "description": "Live sports standings for 12 leagues with table, compact, and conference views. Powered by ESPN.",
+  "author": "home-screens",
+  "license": "MIT",
+  "minAppVersion": "0.20.0",
+  "moduleType": "standings",
+  "category": "News & Finance",
+  "icon": "Trophy",
+
+  "defaultConfig": {
+    "view": "table",
+    "league": "nba",
+    "grouping": "conference",
+    "teamsToShow": 0,
+    "showPlayoffLine": true,
+    "rotationIntervalMs": 10000,
+    "refreshIntervalMs": 300000,
+    "accentOpacity": 16
+  },
+
+  "defaultSize": { "w": 400, "h": 600 },
+
+  "defaultStyle": {
+    "fontSize": 16,
+    "backgroundColor": "rgba(0,0,0,0.3)"
+  },
+
+  "configSchema": {
+    "type": "object",
+    "properties": {
+      "view": {
+        "type": "string",
+        "title": "View",
+        "enum": ["table", "compact", "conference"],
+        "enumLabels": ["Table", "Compact", "Conference"],
+        "ui:widget": "select",
+        "ui:group": "Display"
+      },
+      "league": {
+        "type": "string",
+        "title": "League",
+        "enum": [
+          "nfl", "nba", "mlb", "nhl", "wnba", "mls",
+          "epl", "laliga", "bundesliga", "seriea", "ligue1", "liga_mx"
+        ],
+        "enumLabels": [
+          "NFL", "NBA", "MLB", "NHL", "WNBA", "MLS",
+          "Premier League", "La Liga", "Bundesliga", "Serie A", "Ligue 1", "Liga MX"
+        ],
+        "ui:widget": "select",
+        "ui:group": "Display"
+      },
+      "grouping": {
+        "type": "string",
+        "title": "Grouping",
+        "enum": ["division", "conference", "league"],
+        "enumLabels": ["By Division", "By Conference", "Full League"],
+        "ui:widget": "select",
+        "ui:group": "Display"
+      },
+      "showPlayoffLine": {
+        "type": "boolean",
+        "title": "Playoff Cutoff Line",
+        "ui:widget": "toggle",
+        "ui:group": "Display"
+      },
+      "teamsToShow": {
+        "type": "number",
+        "title": "Teams to Show (0 = all)",
+        "minimum": 0,
+        "maximum": 32,
+        "ui:widget": "slider",
+        "ui:step": 1,
+        "ui:group": "Display"
+      },
+      "accentOpacity": {
+        "type": "number",
+        "title": "Team Color Intensity",
+        "description": "Opacity of the team color gradient bar (hex, 0-255)",
+        "minimum": 0,
+        "maximum": 64,
+        "ui:widget": "slider",
+        "ui:step": 4,
+        "ui:group": "Display",
+        "ui:showWhen": { "field": "view", "equals": "table" }
+      },
+      "rotationIntervalMs": {
+        "type": "number",
+        "title": "Rotation (seconds)",
+        "description": "How long to show each group before rotating (5-60s)",
+        "minimum": 5000,
+        "maximum": 60000,
+        "ui:widget": "slider",
+        "ui:step": 5000,
+        "ui:group": "Timing"
+      },
+      "refreshIntervalMs": {
+        "type": "number",
+        "title": "Refresh (minutes)",
+        "description": "How often to fetch fresh standings data (1-60 min)",
+        "minimum": 60000,
+        "maximum": 3600000,
+        "ui:widget": "slider",
+        "ui:step": 60000,
+        "ui:group": "Timing"
+      }
+    }
+  },
+
+  "exports": {
+    "component": "default",
+    "configSection": "ConfigSection"
+  },
+
+  "allowedDomains": [
+    "site.api.espn.com"
+  ],
+
+  "permissions": ["network", "secrets", "events"],
+
+  "dataRequirements": [],
+  "prefetchUrl": null,
+
+  "secrets": [
+    {
+      "key": "espn_api_key",
+      "label": "ESPN API Key",
+      "description": "Optional — ESPN's public API works without a key, but a key increases rate limits. Leave blank to use the public API.",
+      "required": false,
+      "placeholder": "your-espn-api-key"
+    }
+  ],
+
+  "configMigrations": {
+    "1.1.0": {
+      "renames": {
+        "rotationInterval": "rotationIntervalMs",
+        "refreshInterval": "refreshIntervalMs"
+      },
+      "defaults": {
+        "accentOpacity": 16
+      }
+    }
+  }
+}
