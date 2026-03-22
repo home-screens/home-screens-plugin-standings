@@ -4,7 +4,7 @@
   "description": "Sports standings plugin for Home Screens — supports 12 leagues, 3 views, and 3 grouping modes via ESPN data",
   "license": "MIT",
   "scripts": {
-    "dev": "vite build --watch",
+    "dev": "vite build && (vite build --watch & npx -y serve@latest . -l 5173 --cors --no-clipboard)",
     "build": "vite build"
   },
   "devDependencies": {
