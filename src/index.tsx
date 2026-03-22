@@ -547,7 +547,7 @@ const S = {
   }),
   rank: {
     color: 'rgba(255,255,255,0.3)', fontVariantNumeric: 'tabular-nums',
-    flexShrink: 0, fontSize: '0.7em', width: '1.2em', textAlign: 'right' as const,
+    flexShrink: 0, fontSize: '0.7em', width: 18, textAlign: 'right' as const,
     position: 'relative' as const,
   },
   logo: (size: number) => ({
@@ -562,15 +562,15 @@ const S = {
   clincher: {
     color: 'rgba(52,211,153,0.7)', fontWeight: 500, fontSize: '0.6em', flexShrink: 0,
   },
-  statCell: (width: string) => ({
-    width, textAlign: 'right' as const, color: 'rgba(255,255,255,0.6)',
+  statCell: (width?: number) => ({
+    width: width || undefined, textAlign: 'right' as const, color: 'rgba(255,255,255,0.6)',
     fontVariantNumeric: 'tabular-nums', flexShrink: 0, fontSize: '0.7em',
-    position: 'relative' as const,
+    whiteSpace: 'nowrap' as const, position: 'relative' as const,
   }),
-  colHeader: (width: string) => ({
-    width, textAlign: 'right' as const, color: 'rgba(255,255,255,0.25)',
+  colHeader: (width?: number) => ({
+    width: width || undefined, textAlign: 'right' as const, color: 'rgba(255,255,255,0.25)',
     textTransform: 'uppercase' as const, letterSpacing: '0.05em',
-    flexShrink: 0, fontSize: '0.55em',
+    whiteSpace: 'nowrap' as const, flexShrink: 0, fontSize: '0.55em',
   }),
   positive: { color: 'rgb(52,211,153)' },
   negative: { color: 'rgb(248,113,113)' },
@@ -578,8 +578,9 @@ const S = {
   streakL: { color: 'rgb(248,113,113)' },
   pointsBold: {
     color: 'rgba(255,255,255,0.8)', fontVariantNumeric: 'tabular-nums',
-    fontWeight: 600, flexShrink: 0, fontSize: '0.7em', width: '2em',
-    textAlign: 'right' as const, position: 'relative' as const,
+    fontWeight: 600, flexShrink: 0, fontSize: '0.7em', width: 28,
+    textAlign: 'right' as const, whiteSpace: 'nowrap' as const,
+    position: 'relative' as const,
   },
 };
 
@@ -672,41 +673,41 @@ function StandingsTeamRow({
 
 // ─── Table View ──────────────────────────────────────────────────────────────
 
-function getColumns(league: string): { key: string; label: string; width: string }[] {
+function getColumns(league: string): { key: string; label: string; width: number }[] {
   const l = league.toLowerCase();
   if (l === 'nfl') {
     return [
-      { key: 'record', label: 'W-L', width: '3.5em' },
-      { key: 'pct', label: 'PCT', width: '3em' },
-      { key: 'pf', label: 'PF', width: '2.5em' },
-      { key: 'pa', label: 'PA', width: '2.5em' },
-      { key: 'diff', label: 'DIFF', width: '3em' },
-      { key: 'strk', label: 'STRK', width: '3em' },
+      { key: 'record', label: 'W-L', width: 42 },
+      { key: 'pct', label: 'PCT', width: 36 },
+      { key: 'pf', label: 'PF', width: 32 },
+      { key: 'pa', label: 'PA', width: 32 },
+      { key: 'diff', label: 'DIFF', width: 38 },
+      { key: 'strk', label: 'STRK', width: 38 },
     ];
   }
   if (l === 'nhl') {
     return [
-      { key: 'gp', label: 'GP', width: '2.25em' },
-      { key: 'record', label: 'W-L-OT', width: '4.5em' },
-      { key: 'pts', label: 'PTS', width: '2.5em' },
-      { key: 'diff', label: 'DIFF', width: '3em' },
-      { key: 'strk', label: 'STRK', width: '3em' },
+      { key: 'gp', label: 'GP', width: 28 },
+      { key: 'record', label: 'W-L-OT', width: 52 },
+      { key: 'pts', label: 'PTS', width: 32 },
+      { key: 'diff', label: 'DIFF', width: 38 },
+      { key: 'strk', label: 'STRK', width: 38 },
     ];
   }
   if (isSoccer(l)) {
     return [
-      { key: 'gp', label: 'GP', width: '2.25em' },
-      { key: 'record', label: 'W-D-L', width: '3.5em' },
-      { key: 'pts', label: 'PTS', width: '2.5em' },
-      { key: 'gd', label: 'GD', width: '3em' },
+      { key: 'gp', label: 'GP', width: 28 },
+      { key: 'record', label: 'W-D-L', width: 42 },
+      { key: 'pts', label: 'PTS', width: 32 },
+      { key: 'gd', label: 'GD', width: 38 },
     ];
   }
   return [
-    { key: 'record', label: 'W-L', width: '3em' },
-    { key: 'pct', label: 'PCT', width: '3em' },
-    { key: 'gb', label: 'GB', width: '2.5em' },
-    { key: 'strk', label: 'STRK', width: '3em' },
-    { key: 'l10', label: 'L10', width: '3em' },
+    { key: 'record', label: 'W-L', width: 36 },
+    { key: 'pct', label: 'PCT', width: 36 },
+    { key: 'gb', label: 'GB', width: 32 },
+    { key: 'strk', label: 'STRK', width: 38 },
+    { key: 'l10', label: 'L10', width: 36 },
   ];
 }
 
@@ -758,7 +759,7 @@ function TableView({ groups, teamsToShow, showPlayoffLine, rotationIntervalMs, g
         display: 'flex', alignItems: 'center', gap: 6, padding: '0 8px 4px',
         paddingLeft: 'calc(0.5rem + 3px)',
       }}>
-        <span style={{ width: '1.2em', fontSize: '0.6em', color: 'rgba(255,255,255,0.25)', textAlign: 'right' as const, flexShrink: 0 }}>#</span>
+        <span style={{ width: 18, fontSize: '0.6em', color: 'rgba(255,255,255,0.25)', textAlign: 'right' as const, flexShrink: 0 }}>#</span>
         <div style={{ width: 18, flexShrink: 0 }} />
         <div style={{ flex: 1 }} />
         {columns.map((col) => (
@@ -820,7 +821,7 @@ function CompactView({ groups, teamsToShow, showPlayoffLine, rotationIntervalMs,
               compact
               accentOpacity={accentOpacity}
             >
-              <span style={{ ...S.statCell('auto'), position: 'relative' as const }}>
+              <span style={{ ...S.statCell(0), position: 'relative' as const }}>
                 {formatRecord(entry, group.league)}
               </span>
               {entry.points !== undefined && (
@@ -864,7 +865,7 @@ function ConferenceColumn({ group, teamsToShow, showPlayoffLine, grouping }: {
           teamLabel={entry.teamAbbr}
           compact
         >
-          <span style={{ ...S.statCell('auto'), color: 'rgba(255,255,255,0.5)', fontSize: '0.6em' }}>
+          <span style={{ ...S.statCell(0), color: 'rgba(255,255,255,0.5)', fontSize: '0.6em' }}>
             {formatRecord(entry, group.league)}
           </span>
         </StandingsTeamRow>
@@ -951,8 +952,17 @@ export default function StandingsPlugin({ config, style }: PluginComponentProps)
 
   return (
     <div style={{
-      width: '100%', height: '100%',
-      fontFamily: style.fontFamily, fontSize: style.fontSize, color: style.textColor,
+      width: '100%', height: '100%', overflow: 'hidden',
+      opacity: style.opacity,
+      borderRadius: style.borderRadius,
+      padding: style.padding,
+      backgroundColor: style.backgroundColor,
+      color: style.textColor,
+      fontFamily: style.fontFamily,
+      fontSize: style.fontSize,
+      backdropFilter: `blur(${style.backdropBlur ?? 0}px)`,
+      WebkitBackdropFilter: `blur(${style.backdropBlur ?? 0}px)`,
+      boxSizing: 'border-box',
     }}>
       {view === 'table' && (
         <TableView
